@@ -20,16 +20,18 @@ thorough test suite, but does not read/write PowerPoint files.
 # Install
 
 In node.js
-`npm install protobi/jszip`
-`npm install protobi/xmldoc`
-`npm install protobi/js-pptx`
+```
+npm install protobi/jszip
+npm install protobi/xmldoc
+npm install protobi/js-pptx
+```
 
 In the browser:
-
-`<script src="xmldoc.min.js"></script>`
-`<script src="xlsx.min.js"></script>`
-`<script src="js-pptx.js"></script>`
-
+```
+<script src="xmldoc.min.js"></script>
+<script src="xlsx.min.js"></script>
+<script src="js-pptx.js"></script>
+```
 
 # Dependencies
 * [xmldoc](https://github.com/nfarina/xmldoc)
@@ -37,16 +39,16 @@ In the browser:
 
 # Contribute
 
-Test:
+###Test:
 `npm run test`
 
-Build:
+###Build:
 `npm run build`
 
-Minify:
+###Minify:
 `npm run minify`
 
-All:
+###All:
 `npm run all`
 
 
