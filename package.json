@@ -1,0 +1,23 @@
+{
+  "name": "js-pptx",
+  "version": "0.0.0",
+  "description": "Pure Javascript reader/writer for PowerPoint .pptx files",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/protobi/js-pptx.git"
+  },
+  "author": "Pieter Sheth-Voss",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/protobi/js-pptx/issues"
+  },
+  "homepage": "https://github.com/protobi/js-pptx",
+  "dependencies": {
+    "jszip": "^2.5.0",
+    "xmldoc": "^0.3.0"
+  }
+}
