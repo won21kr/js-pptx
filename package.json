@@ -19,5 +19,8 @@
   "dependencies": {
     "jszip": "^2.5.0",
     "xmldoc": "^0.3.0"
+  },
+  "devDependencies": {
+    "browserify": "^9.0.7"
   }
 }
