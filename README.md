@@ -111,7 +111,12 @@ Ideally would be consistent, and am working out which way to go.  Advice is welc
 This library currently assumes it's starting from an existing presentation, and doesn't (yet) create one from scratch.
 This allows you to use existing themes, styles and layouts.
 
-
+# To do
+* Add a slide
+* Add a chart
+* Add a table
+* Add an image
+* Set presentation properties
 
 # Contribute
 
