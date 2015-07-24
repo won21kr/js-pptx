@@ -20,7 +20,7 @@ spPr.prototype.toJSON = function() {
 
 spPr.prototype.x = function(val) {
   if (arguments.length == 0) return this.content["a:xfrm"][0]["a:off"][0]['$'].x;
-  else return this.content["a:xfrm"][0]["a:off"][0]['$'].x = val;
+  else  this.content["a:xfrm"][0]["a:off"][0]['$'].x = val;
   return this;
 }
 spPr.prototype.y = function(val) {

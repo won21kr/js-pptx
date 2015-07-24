@@ -18,15 +18,15 @@ describe('PPTX', function () {
       pptx.load(data, function (err) {
 
         var slide1 = pptx.getSlide('slide1');
-        var shapes = slide1.getShapes();
-
-        shapes[3].shapeProperties().x(PPTX.emu.inch(1));
-        shapes[3].shapeProperties().y(PPTX.emu.inch(1));
-
-        shapes[3].shapeProperties().cx(PPTX.emu.inch(2));
-        shapes[3].shapeProperties().cy(PPTX.emu.inch(0.75));
-        shapes[3].shapeProperties().prstGeom('trapezoid');
-        shapes[3].text("Now it's a trapezoid")
+        var shapes = slide1.getShapes()
+        shapes[3]
+            .text("Now it's a trapezoid")
+            .shapeProperties()
+            .x(PPTX.emu.inch(1))
+            .y(PPTX.emu.inch(1))
+            .cx(PPTX.emu.inch(2))
+            .cy(PPTX.emu.inch(0.75))
+            .prstGeom('trapezoid');
 
         fs.writeFile(OUTFILE, pptx.toBuffer(), function (err) {
           if (err) throw err;
