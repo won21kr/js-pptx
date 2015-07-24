@@ -19,11 +19,8 @@ spPr.prototype.toJSON = function() {
 }
 
 spPr.prototype.x = function(val) {
-  console.log([arguments, arguments.length, val])
   if (arguments.length == 0) return this.content["a:xfrm"][0]["a:off"][0]['$'].x;
   else return this.content["a:xfrm"][0]["a:off"][0]['$'].x = val;
-  console.log("asdfasdfs")
-
   return this;
 }
 spPr.prototype.y = function(val) {

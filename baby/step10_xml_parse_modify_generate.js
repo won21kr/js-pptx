@@ -37,9 +37,6 @@ fs.readFile(INFILE, function (err, data) {
 
     console.log(JSON.stringify(shapes[3].shapeProperties().toJSON(),null,4))
 
-
-
-
     //fs.writeFile('./lab/parts2/parts2.json', JSON.stringify(pptx, null,4), 'utf8');
     fs.writeFile(OUTFILE, pptx.toBuffer(), function (err) {
       if (err) throw err;
