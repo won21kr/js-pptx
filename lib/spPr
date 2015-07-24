@@ -39,6 +39,7 @@ spPr.prototype.cy = function(val) {
   return this;
 }
 
+// see http://www.officeopenxml.com/drwSp-prstGeom.php
 spPr.prototype.prstGeom = function(shape) {
   if (arguments.length == 0) return this.content["a:prstGeom"][0]["$"]["prst"] ;
   else this.content["a:prstGeom"][0]["$"]["prst"] = shape;

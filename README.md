@@ -21,6 +21,8 @@ thorough test suite (but does not read or write PowerPoint).
 Motivated by desire to read and modify existing presentations, to inherit their themes, layouts and possibly content,
 and work in the browser if possible.
 
+# License
+GNU General Public License (GPL)
 
 # Install
 
@@ -65,7 +67,7 @@ fs.readFile(INFILE, function (err, data) {
         .y(PPTX.emu.inch(1))
         .cx(PPTX.emu.inch(2))
         .cy(PPTX.emu.inch(0.75))
-        .prstGeom('trapezoid');  
+        .prstGeom('trapezoid');
     });
   });
 });
