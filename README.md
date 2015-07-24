@@ -64,8 +64,8 @@ fs.readFile(INFILE, function (err, data) {
         .x(PPTX.emu.inch(1))
         .y(PPTX.emu.inch(1))
         .cx(PPTX.emu.inch(2))
-        .cy(PPTX.emu.inch(0.75))fs.writeFile(OUTFILE, pptx.toBuffer(), function (err) {
-        .prstGeom('trapezoid');  if (err) throw err;
+        .cy(PPTX.emu.inch(0.75))
+        .prstGeom('trapezoid');  
     });
   });
 });
