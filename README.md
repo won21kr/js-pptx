@@ -21,38 +21,6 @@ thorough test suite (but does not read or write PowerPoint).
 Motivated by desire to read and modify existing presentations, to inherit their themes, layouts and possibly content,
 and work in the browser if possible.
 
-# Design Philosophy
-
-The design approach here uses:
-* `JSZip` to unzip an existing `.pptx` file and zip it back,
-* `xml2js` to convert the XML to Javascript and back to XML.
-
-This library currently assumes it's starting from an existing presentation, and doesn't create one from scratch.
-This allows you to use existing themes, styles and layouts.
-
-Converting to Javascript allows the content to be manipulated programmatically.  For each major entity, a Javascript class is created,
-such as:
- * PPTX.Presentation
- * PPTX.Slide
- * PPTX.Shape
- * PPTX.spPr  // ShapeProperties
- * etc.
-
-These classes allow properties to be set, and chained in a manner similar to d3 or jQuery.
-
-Right now, this uses English names for high-level constructs (e.g. `Presentation` and `Slide`),
-but uses names that directly mirror the OpenXML tagNames for lower level constructs (e.g.  `spPr` for ShapeProperties).
-
-The challenge is it'll be a lot easier to extend the library if we follow the OpenXML tag names,
-but the OpenXML tag names are so cryptic that they don't make great names for a Javascript library.
-
-So we default to using the English name is used when returning objects even if the object has a cryptic class name, e.g.:
-* `Slide.getShapes()` returns an array of `Shape` objects and
-* `Shape.shapeProperties()` returns an `spPr` object.
-
-Ideally would be consistent, and am working out which way to go.  Advice is welcome!
-
-
 
 # Install
 
@@ -103,6 +71,47 @@ fs.readFile(INFILE, function (err, data) {
 });
 
 ```
+
+# Design Philosophy
+
+The design approach here uses:
+* `JSZip` to unzip an existing `.pptx` file and zip it back,
+* `xml2js` to convert the XML to Javascript and back to XML.
+
+Converting to Javascript allows the content to be manipulated programmatically.  For each major entity, a Javascript class is created,
+such as:
+ * PPTX.Presentation
+ * PPTX.Slide
+ * PPTX.Shape
+ * PPTX.spPr  // ShapeProperties
+ * etc.
+
+These classes allow properties to be set, and chained in a manner similar to d3 or jQuery.
+The Javascript classes provide syntactic sugar, as a convenient way to query and modify the presentation.
+
+But we can't possibly create a Javascript class that covers every entity and option defined in OpenXML.
+So each of these classes exposes the  XML-to-Javascript object as a property `.content`, giving you theoretically
+direct access to anything in the OpenXML standard, enabling you to take over
+whenever the pre-defined features don't yet cover your particular use case.
+
+It's up to you of course, to make sure that those changes convert to valid XML.  Debugging PPTX is a pain.
+
+Right now, this uses English names for high-level constructs (e.g. `Presentation` and `Slide`),
+but for lower level constructs uses names that directly mirror the OpenXML tagNames  (e.g.  `spPr` for ShapeProperties).
+
+The challenge is it'll be a lot easier to extend the library if we follow the OpenXML tag names,
+but the OpenXML tag names are so cryptic that they don't make great names for a Javascript library.
+
+So we default to using the English name is used when returning objects even if the object has a cryptic class name, e.g.:
+* `Slide.getShapes()` returns an array of `Shape` objects and
+* `Shape.shapeProperties()` returns an `spPr` object.
+
+Ideally would be consistent, and am working out which way to go.  Advice is welcome!
+
+This library currently assumes it's starting from an existing presentation, and doesn't (yet) create one from scratch.
+This allows you to use existing themes, styles and layouts.
+
+
 
 # Contribute
 
