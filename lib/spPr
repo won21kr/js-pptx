@@ -1,11 +1,12 @@
 var defaults = require('./defaults');
+function clone(obj) { return JSON.parse(JSON.stringify(obj))}
 
 //======================================================================================================================
 // spPr   ShapeProperties
 //======================================================================================================================
 
 var spPr = function (content) {
-  this.content = content || defaults["p:sp"]["p:spPr"][0];
+  this.content = content || clone(defaults["p:sp"]["p:spPr"][0]);
 }
 
 spPr.prototype.toJSON = function() {

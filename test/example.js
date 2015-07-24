@@ -17,6 +17,9 @@ describe('PPTX', function () {
       var pptx = new PPTX.Presentation();
       pptx.load(data, function (err) {
 
+        var slide3 = pptx.addSlide("slideLayout1");
+        var slide4 = pptx.addSlide("slideLayout2");
+
         var slide1 = pptx.getSlide('slide1');
         var shapes = slide1.getShapes()
         shapes[3]
@@ -27,6 +30,27 @@ describe('PPTX', function () {
             .cx(PPTX.emu.inch(2))
             .cy(PPTX.emu.inch(0.75))
             .prstGeom('trapezoid');
+
+
+        var triangle = slide1.addShape()
+            .text("Triangle")
+            .shapeProperties()
+            .x(PPTX.emu.inch(2))
+            .y(PPTX.emu.inch(2))
+            .cx(PPTX.emu.inch(2))
+            .cy(PPTX.emu.inch(2))
+            .prstGeom('triangle');
+
+        for (var i= 0; i<20; i++) {
+          slide1.addShape()
+              .text(""+i)
+              .shapeProperties()
+              .x(PPTX.emu.inch((Math.random()*10)))
+              .y(PPTX.emu.inch((Math.random()*6)))
+              .cx(PPTX.emu.inch(1))
+              .cy(PPTX.emu.inch(1))
+              .prstGeom('ellipse');
+        }
 
         fs.writeFile(OUTFILE, pptx.toBuffer(), function (err) {
           if (err) throw err;
