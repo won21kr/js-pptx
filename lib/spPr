@@ -1,0 +1,51 @@
+var defaults = require('./defaults');
+
+//======================================================================================================================
+// spPr   ShapeProperties
+//======================================================================================================================
+
+var spPr = function (content) {
+  this.content = content || defaults["p:sp"]["p:spPr"][0];
+}
+
+spPr.prototype.toJSON = function() {
+  return {
+    x: this.x(),
+    y: this.y(),
+    cx: this.cx(),
+    cy: this.cy(),
+    prstGeom: this.prstGeom()
+  }
+}
+
+spPr.prototype.x = function(val) {
+  console.log([arguments, arguments.length, val])
+  if (arguments.length == 0) return this.content["a:xfrm"][0]["a:off"][0]['$'].x;
+  else return this.content["a:xfrm"][0]["a:off"][0]['$'].x = val;
+  console.log("asdfasdfs")
+
+  return this;
+}
+spPr.prototype.y = function(val) {
+  if (arguments.length == 0) return this.content["a:xfrm"][0]["a:off"][0]['$'].y;
+  else this.content["a:xfrm"][0]["a:off"][0]['$'].y = val;
+  return this;
+}
+spPr.prototype.cx = function(val) {
+  if (arguments.length == 0) return this.content["a:xfrm"][0]["a:ext"][0]['$'].cx;
+  else this.content["a:xfrm"][0]["a:ext"][0]['$'].cx = val;
+  return this;
+}
+spPr.prototype.cy = function(val) {
+  if (arguments.length == 0) return this.content["a:xfrm"][0]["a:ext"][0]['$'].cy;
+  else this.content["a:xfrm"][0]["a:ext"][0]['$'].cy = val;
+  return this;
+}
+
+spPr.prototype.prstGeom = function(shape) {
+  if (arguments.length == 0) return this.content["a:prstGeom"][0]["$"]["prst"] ;
+  else this.content["a:prstGeom"][0]["$"]["prst"] = shape;
+  return this;
+}
+
+module.exports = spPr;

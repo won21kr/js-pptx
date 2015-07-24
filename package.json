@@ -19,6 +19,7 @@
   "dependencies": {
     "async": "^1.4.0",
     "jszip": "^2.5.0",
+    "query": "git://github.com/protobi/query.git",
     "xml2js": "^0.4.9"
   },
   "devDependencies": {}
