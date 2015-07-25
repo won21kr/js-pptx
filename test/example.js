@@ -42,19 +42,18 @@ describe('PPTX', function () {
             .cy(PPTX.emu.inch(2))
             .prstGeom('triangle');
 
-//        for (var i= 0; i<20; i++) {
-//          slide1.addShape()
-//              .text(""+i)
-//              .shapeProperties()
-//              .x(PPTX.emu.inch((Math.random()*10)))
-//              .y(PPTX.emu.inch((Math.random()*6)))
-//              .cx(PPTX.emu.inch(1))
-//              .cy(PPTX.emu.inch(1))
-//              .prstGeom('ellipse');
-//        }
+        for (var i= 0; i<20; i++) {
+          slide1.addShape()
+              .text(""+i)
+              .shapeProperties()
+              .x(PPTX.emu.inch((Math.random()*10)))
+              .y(PPTX.emu.inch((Math.random()*6)))
+              .cx(PPTX.emu.inch(1))
+              .cy(PPTX.emu.inch(1))
+              .prstGeom('ellipse');
+        }
 
         var chart = slide1.addChart(function (err, chart) {
-          console.log("DONE ADDING CHART");
 
 
           fs.writeFile(OUTFILE, pptx.toBuffer(), function (err) {

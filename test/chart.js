@@ -57,16 +57,15 @@ describe('PPTX', function () {
 //          console.log(OUTFILE);
 //          done()  ;
 //        });
+        var slide2 = pptx.addSlide("slideLayout1");
 
-        var chart = slide1.addChart(function (err, chart) {
-          console.log("DONE ADDING CHART");
-
-//          console.log("############ " + pptx.content["docProps/thumbnail.jpeg"].length)
-          fs.writeFile(OUTFILE, pptx.toBuffer(), function (err) {
-            if (err) throw err;
-            console.log("open "+OUTFILE)
-            done();
-          });
+        slide2.addChart(function (err, chart) {
+          console.log("DONE ADDING CHART1");
+            fs.writeFile(OUTFILE, pptx.toBuffer(), function (err) {
+              if (err) throw err;
+              console.log("open " + OUTFILE)
+              done();
+            });
         });
       });
     });
