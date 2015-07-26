@@ -21,51 +21,14 @@ describe('PPTX', function () {
       pptx.load(data, function (err) {
 
         var slide1 = pptx.getSlide('slide1');
-//        var shapes = slide1.getShapes()
-//        shapes[3]
-//            .text("Now it's a trapezoid")
-//            .shapeProperties()
-//            .x(PPTX.emu.inch(1))
-//            .y(PPTX.emu.inch(1))
-//            .cx(PPTX.emu.inch(2))
-//            .cy(PPTX.emu.inch(0.75))
-//            .prstGeom('trapezoid');
-//
-//
-//        var triangle = slide1.addShape()
-//            .text("Triangle")
-//            .shapeProperties()
-//            .x(PPTX.emu.inch(2))
-//            .y(PPTX.emu.inch(2))
-//            .cx(PPTX.emu.inch(2))
-//            .cy(PPTX.emu.inch(2))
-//            .prstGeom('triangle');
-
-//        for (var i= 0; i<20; i++) {
-//          slide1.addShape()
-//              .text(""+i)
-//              .shapeProperties()
-//              .x(PPTX.emu.inch((Math.random()*10)))
-//              .y(PPTX.emu.inch((Math.random()*6)))
-//              .cx(PPTX.emu.inch(1))
-//              .cy(PPTX.emu.inch(1))
-//              .prstGeom('ellipse');
-//        }
-//
-//        fs.writeFile(OUTFILE, pptx.toBuffer(), function (err) {
-//            if (err) throw err;
-//          console.log(OUTFILE);
-//          done()  ;
-//        });
         var slide2 = pptx.addSlide("slideLayout1");
-
-        slide2.addChart(function (err, chart) {
+        slide1.addChart(function (err, chart) {
           console.log("DONE ADDING CHART1");
-            fs.writeFile(OUTFILE, pptx.toBuffer(), function (err) {
-              if (err) throw err;
-              console.log("open " + OUTFILE)
-              done();
-            });
+          fs.writeFile(OUTFILE, pptx.toBuffer(), function (err) {
+            if (err) throw err;
+            console.log("open " + OUTFILE)
+            done();
+          });
         });
       });
     });
