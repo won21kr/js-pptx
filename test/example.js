@@ -18,11 +18,12 @@ describe('PPTX', function () {
       var pptx = new PPTX.Presentation();
       pptx.load(data, function (err) {
 
-        var slide3 = pptx.addSlide("slideLayout1");
+        var slide3 = pptx.addSlide("slideLayout3");
         var slide4 = pptx.addSlide("slideLayout2");
 
         var slide1 = pptx.getSlide('slide1');
-        var shapes = slide1.getShapes()
+        var shapes = slide1.getShapes();
+
         shapes[3]
             .text("Now it's a trapezoid")
             .shapeProperties()
@@ -31,7 +32,6 @@ describe('PPTX', function () {
             .cx(PPTX.emu.inch(2))
             .cy(PPTX.emu.inch(0.75))
             .prstGeom('trapezoid');
-
 
         var triangle = slide1.addShape()
             .text("Triangle")
@@ -43,7 +43,7 @@ describe('PPTX', function () {
             .prstGeom('triangle');
 
         for (var i= 0; i<20; i++) {
-          slide1.addShape()
+          slide3.addShape()
               .text(""+i)
               .shapeProperties()
               .x(PPTX.emu.inch((Math.random()*10)))
@@ -70,6 +70,7 @@ describe('PPTX', function () {
                   cy: '685800',
                   prstGeom: 'trapezoid' });
               });
+              console.log("open "+OUTFILE)
               done();
             });
           });
