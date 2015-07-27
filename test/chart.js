@@ -21,13 +21,18 @@ describe('PPTX', function () {
       pptx.load(data, function (err) {
 
         var slide1 = pptx.getSlide('slide1');
-        var slide2 = pptx.addSlide("slideLayout1");
-        slide1.addChart(barChart2, function (err, chart) {
-          console.log("DONE ADDING CHART1");
-          fs.writeFile(OUTFILE, pptx.toBuffer(), function (err) {
-            if (err) throw err;
-            console.log("open " + OUTFILE)
-            done();
+        var slide2 = pptx.addSlide("slideLayout6");
+        slide1.addChart(barChart, function (err, chart) {
+          if (err) throw(err);
+
+          slide2.addChart(barChart2, function (err, chart) {
+            if (err) throw(err);
+
+            fs.writeFile(OUTFILE, pptx.toBuffer(), function (err) {
+              if (err) throw err;
+              console.log("open " + OUTFILE)
+              done();
+            });
           });
         });
       });
@@ -48,17 +53,17 @@ var barChart = {
   data: [
     {
       name: 'Series 1',
-      labels: ['Category 1','Category 2','Category 3','Category 4'],
+      labels: ['Category 1', 'Category 2', 'Category 3', 'Category 4'],
       values: [4.3, 2.5, 3.5, 4.5]
     },
     {
       name: 'Series 2',
-      labels: ['Category 1','Category 2','Category 3','Category 4'],
+      labels: ['Category 1', 'Category 2', 'Category 3', 'Category 4'],
       values: [2.4, 4.4, 1.8, 2.8]
     },
     {
       name: 'Series 3',
-      labels: ['Category 1','Category 2','Category 3','Category 4'],
+      labels: ['Category 1', 'Category 2', 'Category 3', 'Category 4'],
       values: [2.0, 2.0, 3.0, 5.0]
     }
   ]

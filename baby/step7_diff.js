@@ -8,7 +8,7 @@ var fs = require("fs");
 //var FILE2 = './test/files/parts3-a.pptx';
 
 var FILE1 = './lab/chart/chart.pptx';
-var FILE2 = './lab/chart-one/chart-one.pptx';
+var FILE2 = './lab/chart-two/chart.pptx';
 
 var zip1 = new JSZip(fs.readFileSync(FILE1));
 var zip2 = new JSZip(fs.readFileSync(FILE2));

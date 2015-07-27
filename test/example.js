@@ -53,7 +53,7 @@ describe('PPTX', function () {
               .prstGeom('ellipse');
         }
 
-        var chart = slide1.addChart(function (err, chart) {
+        var chart = slide1.addChart(barChart, function (err, chart) {
 
 
           fs.writeFile(OUTFILE, pptx.toBuffer(), function (err) {
@@ -80,3 +80,25 @@ describe('PPTX', function () {
     });
   });
 });
+
+var barChart = {
+  title: 'Sample bar chart',
+  renderType: 'bar',
+  data: [
+    {
+      name: 'Series 1',
+      labels: ['Category 1', 'Category 2', 'Category 3', 'Category 4'],
+      values: [4.3, 2.5, 3.5, 4.5]
+    },
+    {
+      name: 'Series 2',
+      labels: ['Category 1', 'Category 2', 'Category 3', 'Category 4'],
+      values: [2.4, 4.4, 1.8, 2.8]
+    },
+    {
+      name: 'Series 3',
+      labels: ['Category 1', 'Category 2', 'Category 3', 'Category 4'],
+      values: [2.0, 2.0, 3.0, 5.0]
+    }
+  ]
+}
