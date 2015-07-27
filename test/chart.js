@@ -22,7 +22,7 @@ describe('PPTX', function () {
 
         var slide1 = pptx.getSlide('slide1');
         var slide2 = pptx.addSlide("slideLayout1");
-        slide1.addChart(barChart, function (err, chart) {
+        slide1.addChart(barChart2, function (err, chart) {
           console.log("DONE ADDING CHART1");
           fs.writeFile(OUTFILE, pptx.toBuffer(), function (err) {
             if (err) throw err;
@@ -35,8 +35,36 @@ describe('PPTX', function () {
   });
 });
 
+//
+//Series 1	Series 2	Series 3
+//Category 1	4.3	2.4	2
+//Category 2	2.5	4.4	2
+//Category 3	3.5	1.8	3
+//Category 4	4.5	2.8	5
 
 var barChart = {
+  title: 'Sample bar chart',
+  renderType: 'bar',
+  data: [
+    {
+      name: 'Series 1',
+      labels: ['Category 1','Category 2','Category 3','Category 4'],
+      values: [4.3, 2.5, 3.5, 4.5]
+    },
+    {
+      name: 'Series 2',
+      labels: ['Category 1','Category 2','Category 3','Category 4'],
+      values: [2.4, 4.4, 1.8, 2.8]
+    },
+    {
+      name: 'Series 3',
+      labels: ['Category 1','Category 2','Category 3','Category 4'],
+      values: [2.0, 2.0, 3.0, 5.0]
+    }
+  ]
+}
+
+var barChart2 = {
   title: 'Sample bar chart',
   renderType: 'bar',
   xmlOptions: {
