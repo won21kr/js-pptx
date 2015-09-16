@@ -1,14 +1,28 @@
 # js-pptx
-Pure Javascript reader/writer for PowerPoint, for use in Node.js or the browser.
+Pure Javascript reader/writer/editor for PowerPoint, for use in Node.js or the browser.
+
 
 # Design goals
 * Read/edit/author PowerPoint .pptx files
-* Pure Javascript
-* Runs in browser and/or Node.js
-* Lightweight
+* Pure Javascript with clean IP
+* Run in browser and/or Node.js
 * Friendly API for basic tasks, like text, shapes, charts, tables
 * Access to raw XML for when you need to be very specific
-* Rigorous test suite
+* Rigorous testing
+
+
+# Current status
+Early in development.  It can currently:
+ * read an existing PPTX file
+ * retain all existing content
+ * add slides, shapes, and charts
+ * save as a PPTX file
+ * basic unit tests
+
+What it cannot yet do is:
+ * Programmatically retrieve / query / edit existing slides
+ * Generate themes, layouts, masters, animations, etc.
+
 
 # Inspiration / Motivation
 Inspired by [officegen](https://github.com/ZivBarber/officegen),
@@ -20,6 +34,60 @@ thorough test suite (but does not read or write PowerPoint).
 
 Motivated by desire to read and modify existing presentations, to inherit their themes, layouts and possibly content,
 and work in the browser if possible.
+
+https://github.com/protobi/js-pptx/wiki/API
+
+# Design Philosophy
+The design concept is to represent the Office document at two levels of abstraction:
+* **Raw XML**  The actual complete OpenXML representation, in all its detail
+* **Conceptual classes**  Simple Javascript classes that provide a convenient API
+
+The conceptual classes provides a clear simple way to do common tasks, e.g. `Presentation().addSlide().addChart(data)`.
+
+The raw API provides a way to do anything that the OpenXML allows, even if it's not yet in the conceptual classes, e.g.
+e.g. `Presentation.getSlide(3).getShape(4).get('a:prstGeom').attr('prst', 'trapezoid')`
+
+
+This solves a major dilemma in existing projects, which have many issue reports like "Please add this crucial feature to the API".
+By being able to access the raw XML, all the features in OpenXML are available, while we make many of them more convenient.
+
+The technical approach here uses:
+* `JSZip` to unzip an existing `.pptx` file and zip it back,
+* `xml2js` to convert the XML to Javascript and back to XML.
+
+Converting to Javascript allows the content to be manipulated programmatically.  For each major entity, a Javascript class is created,
+such as:
+ * PPTX.Presentation
+ * PPTX.Slide
+ * PPTX.Shape
+ * PPTX.spPr  // ShapeProperties
+ * etc.
+
+These classes allow properties to be set, and chained in a manner similar to d3 or jQuery.
+The Javascript classes provide syntactic sugar, as a convenient way to query and modify the presentation.
+
+But we can't possibly create a Javascript class that covers every entity and option defined in OpenXML.
+So each of these classes exposes the  XML-to-Javascript object as a property `.content`, giving you theoretically
+direct access to anything in the OpenXML standard, enabling you to take over
+whenever the pre-defined features don't yet cover your particular use case.
+
+It's up to you of course, to make sure that those changes convert to valid XML.  Debugging PPTX is a pain.
+
+Right now, this uses English names for high-level constructs (e.g. `Presentation` and `Slide`),
+but for lower level constructs uses names that directly mirror the OpenXML tagNames  (e.g.  `spPr` for ShapeProperties).
+
+The challenge is it'll be a lot easier to extend the library if we follow the OpenXML tag names,
+but the OpenXML tag names are so cryptic that they don't make great names for a Javascript library.
+
+So we default to using the English name is used when returning objects even if the object has a cryptic class name, e.g.:
+* `Slide.getShapes()` returns an array of `Shape` objects and
+* `Shape.shapeProperties()` returns an `spPr` object.
+
+Ideally would be consistent, and am working out which way to go.  Advice is welcome!
+
+This library currently assumes it's starting from an existing presentation, and doesn't (yet) create one from scratch.
+This allows you to use existing themes, styles and layouts.
+
 
 # License
 GNU General Public License (GPL)
@@ -74,45 +142,6 @@ fs.readFile(INFILE, function (err, data) {
 
 ```
 
-# Design Philosophy
-
-The design approach here uses:
-* `JSZip` to unzip an existing `.pptx` file and zip it back,
-* `xml2js` to convert the XML to Javascript and back to XML.
-
-Converting to Javascript allows the content to be manipulated programmatically.  For each major entity, a Javascript class is created,
-such as:
- * PPTX.Presentation
- * PPTX.Slide
- * PPTX.Shape
- * PPTX.spPr  // ShapeProperties
- * etc.
-
-These classes allow properties to be set, and chained in a manner similar to d3 or jQuery.
-The Javascript classes provide syntactic sugar, as a convenient way to query and modify the presentation.
-
-But we can't possibly create a Javascript class that covers every entity and option defined in OpenXML.
-So each of these classes exposes the  XML-to-Javascript object as a property `.content`, giving you theoretically
-direct access to anything in the OpenXML standard, enabling you to take over
-whenever the pre-defined features don't yet cover your particular use case.
-
-It's up to you of course, to make sure that those changes convert to valid XML.  Debugging PPTX is a pain.
-
-Right now, this uses English names for high-level constructs (e.g. `Presentation` and `Slide`),
-but for lower level constructs uses names that directly mirror the OpenXML tagNames  (e.g.  `spPr` for ShapeProperties).
-
-The challenge is it'll be a lot easier to extend the library if we follow the OpenXML tag names,
-but the OpenXML tag names are so cryptic that they don't make great names for a Javascript library.
-
-So we default to using the English name is used when returning objects even if the object has a cryptic class name, e.g.:
-* `Slide.getShapes()` returns an array of `Shape` objects and
-* `Shape.shapeProperties()` returns an `spPr` object.
-
-Ideally would be consistent, and am working out which way to go.  Advice is welcome!
-
-This library currently assumes it's starting from an existing presentation, and doesn't (yet) create one from scratch.
-This allows you to use existing themes, styles and layouts.
-
 # To do
 * Add a slide
 * Add a chart
@@ -123,7 +152,7 @@ This allows you to use existing themes, styles and layouts.
 # Contribute
 
 ###Test:
-`npm run test`
+`npm test`
 
 ###Build:
 `npm run build`
@@ -133,12 +162,4 @@ This allows you to use existing themes, styles and layouts.
 
 ###All:
 `npm run all`
-
-
-
-# Current status:
-Embryonic - not at all ready for use.
-
-
-
 
