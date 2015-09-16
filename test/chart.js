@@ -6,7 +6,6 @@ var PPTX = require('../lib/pptx');
 var xml2js = require('xml2js');
 var xmlbuilder = require('xmlbuilder')
 
-
 var INFILE = './lab/chart-null/chart-null.pptx';
 var OUTFILE = '/tmp/chart.pptx';
 

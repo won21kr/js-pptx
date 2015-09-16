@@ -28,3 +28,4 @@ node_modules
 
 lab/
 .idea/
+.DS_Store

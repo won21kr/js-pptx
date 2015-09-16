@@ -3,36 +3,34 @@ var assert = require('assert');
 
 describe("XmlNode", function () {
   it('constructs with new', function () {
-    var node = new XmlNode("p:sld", {})
-    assert(node.tag == 'p:sld')
+    var node = new XmlNode();
+    node.attr('color', '#39C');
+    assert.equal(node.attr('color'), '#39C');
+    assert.deepEqual(node.el, { $: { color: "#39C"}})
   });
 
   it('constructs as function', function () {
-    var node = XmlNode("p:sld", {})
-    assert(node.tag == 'p:sld')
+    var node = XmlNode().attr('color', '#39C')
+    assert.equal(node.attr('color'), '#39C');
+    assert.deepEqual(node.el, { $: { color: "#39C"}})
   });
 
-  it('constructs as function', function () {
-    var node = new XmlNode("p:sld")
-    node.attr('color', 'red')
-    assert(node.tag == 'p:sld');
-    assert(node.attr('color') == 'red')
+  it('adds a child', function () {
+    var node = XmlNode().attr("color", "#39C").addChild("p:sld", XmlNode().attr("color", "#9B6"));
+    assert.deepEqual(node.el, { $: { color: "#39C"}, "p:sld": [{ $: { color: "#9B6"}}]})
+
   });
+  it('sets a child', function () {
+    var node = XmlNode().attr("color", "#39C").setChild("p:sld", XmlNode().attr("color", "#9B6"));
+    assert.deepEqual(node.el, { $: { color: "#39C"}, "p:sld": { $: { color: "#9B6"}}})
 
-  it('constructs as function', function () {
-    var node =  XmlNode("p:sld")
-    node.attr('color', 'red')
-    assert(node.tag == 'p:sld');
-    assert(node.attr('color') == 'red')
   });
-
-
-  it('constructs as function', function () {
-    var node = XmlNode("p:sld").attr('color', 'red').attr({ size: 3, transparent: false})
-    assert(node.tag == 'p:sld');
-    assert(node.attr('color') == 'red')
-    assert(node.attr('size') == 3)
-    assert(node.attr('transparent') == false)
-  })
-
-})
+  it('takes an element in its constructor', function () {
+    var node = XmlNode({ $: { color: "#39C"}, "p:sld": { $: { color: "#9B6"}}});
+    assert.deepEqual(node.el, { $: { color: "#39C"}, "p:sld": { $: { color: "#9B6"}}})
+  });
+  it('exposes toJSON() as a public method', function () {
+    var node = XmlNode({ $: { color: "#39C"}, "p:sld": { $: { color: "#9B6"}}});
+    assert.deepEqual(node.toJSON(), { $: { color: "#39C"}, "p:sld": { $: { color: "#9B6"}}})
+  });
+});
