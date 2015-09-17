@@ -1,8 +1,8 @@
 {
   "name": "js-pptx",
-  "version": "0.0.0",
+  "version": "0.1.1",
   "description": "Pure Javascript reader/writer for PowerPoint .pptx files",
-  "main": "index.js",
+  "main": "lib/pptx.js",
   "scripts": {
     "test": "mocha"
   },
@@ -25,5 +25,12 @@
     "xml2js": "^0.4.9",
     "xmlbuilder": "^2.6.4"
   },
-  "devDependencies": {}
+  "devDependencies": {},
+  "directories": {
+    "test": "test"
+  },
+  "keywords": [
+    "PowerPoint",
+    "parser/generator"
+  ]
 }

@@ -23,6 +23,58 @@ What it cannot yet do is:
  * Programmatically retrieve / query / edit existing slides
  * Generate themes, layouts, masters, animations, etc.
 
+# License
+GNU General Public License (GPL)
+
+# Install
+
+In node.js
+```
+npm install protobi/js-pptx
+```
+
+In the browser: **(Not yet implemented)**
+```
+<script src="js-pptx.js"></script>
+```
+
+# Dependencies
+* [xml2js](https://github.com/nfarina/xmldoc)
+* [async](https://github.com/caolan/async)
+* [jszip](https://stuk.github.io/jszip)
+
+# Usage
+
+```js
+var PPTX = require('../lib/pptx');
+var fs = require('fs');
+
+var INFILE = './test/files/parts3.pptx';
+var OUTFILE = './test/files/parts3-a.pptx';
+
+fs.readFile(INFILE, function (err, data) {
+  if (err) throw err;
+
+  var pptx = new PPTX.Presentation();
+  pptx.load(data, function (err) {
+
+    var slide1 = pptx.getSlide('slide1');
+    var shapes = slide1.getShapes();
+
+    var shapes = slide1.getShapes()
+    shapes[3]
+        .text("Now it's a trapezoid")
+        .shapeProperties()
+        .x(PPTX.emu.inch(1))
+        .y(PPTX.emu.inch(1))
+        .cx(PPTX.emu.inch(2))
+        .cy(PPTX.emu.inch(0.75))
+        .prstGeom('trapezoid');
+    });
+  });
+});
+
+```
 
 # Inspiration / Motivation
 Inspired by [officegen](https://github.com/ZivBarber/officegen),
@@ -112,23 +164,55 @@ In the browser:
 # Usage
 
 ```js
-var PPTX = require('../lib/pptx');
-var fs = require('fs');
+"use strict";
 
-var INFILE = './test/files/parts3.pptx';
-var OUTFILE = './test/files/parts3-a.pptx';
+var fs = require("fs");
+var PPTX = require('..');
+
+
+var INFILE = './test/files/minimal.pptx'; // a blank PPTX file with my layouts, themes, masters.
+var OUTFILE = '/tmp/example.pptx';
 
 fs.readFile(INFILE, function (err, data) {
   if (err) throw err;
-
   var pptx = new PPTX.Presentation();
   pptx.load(data, function (err) {
-
     var slide1 = pptx.getSlide('slide1');
-    var shapes = slide1.getShapes();
 
-    var shapes = slide1.getShapes()
-    shapes[3]
+    var slide2 = pptx.addSlide("slideLayout3"); // section divider
+    var slide3 = pptx.addSlide("slideLayout6"); // title only
+
+
+    var triangle = slide1.addShape()
+        .text("Triangle")
+        .shapeProperties()
+        .x(PPTX.emu.inch(2))
+        .y(PPTX.emu.inch(2))
+        .cx(PPTX.emu.inch(2))
+        .cy(PPTX.emu.inch(2))
+        .prstGeom('triangle');
+
+    var triangle = slide1.addShape()
+        .text("Ellipse")
+        .shapeProperties()
+        .x(PPTX.emu.inch(4))
+        .y(PPTX.emu.inch(4))
+        .cx(PPTX.emu.inch(2))
+        .cy(PPTX.emu.inch(1))
+        .prstGeom('ellipse');
+
+    for (var i = 0; i < 20; i++) {
+      slide2.addShape()
+          .text("" + i)
+          .shapeProperties()
+          .x(PPTX.emu.inch((Math.random() * 10)))
+          .y(PPTX.emu.inch((Math.random() * 6)))
+          .cx(PPTX.emu.inch(1))
+          .cy(PPTX.emu.inch(1))
+          .prstGeom('ellipse');
+    }
+
+    slide1.getShapes()[3]
         .text("Now it's a trapezoid")
         .shapeProperties()
         .x(PPTX.emu.inch(1))
@@ -136,18 +220,49 @@ fs.readFile(INFILE, function (err, data) {
         .cx(PPTX.emu.inch(2))
         .cy(PPTX.emu.inch(0.75))
         .prstGeom('trapezoid');
+
+    var chart = slide3.addChart(barChart, function (err, chart) {
+
+      fs.writeFile(OUTFILE, pptx.toBuffer(), function (err) {
+        if (err) throw err;
+        console.log("open " + OUTFILE)
+      });
     });
   });
 });
 
+var barChart = {
+  title: 'Sample bar chart',
+  renderType: 'bar',
+  data: [
+    {
+      name: 'Series 1',
+      labels: ['Category 1', 'Category 2', 'Category 3', 'Category 4'],
+      values: [4.3, 2.5, 3.5, 4.5]
+    },
+    {
+      name: 'Series 2',
+      labels: ['Category 1', 'Category 2', 'Category 3', 'Category 4'],
+      values: [2.4, 4.4, 1.8, 2.8]
+    },
+    {
+      name: 'Series 3',
+      labels: ['Category 1', 'Category 2', 'Category 3', 'Category 4'],
+      values: [2.0, 2.0, 3.0, 5.0]
+    }
+  ]
+}
 ```
 
-# To do
-* Add a slide
-* Add a chart
-* Add a table
-* Add an image
+# Next steps
+* Browserify and test in browser
+* Publish to bower
+* Add tables
+* Add images
 * Set presentation properties
+* Set theme
+* Set layouts
+* Set masters
 
 # Contribute
 

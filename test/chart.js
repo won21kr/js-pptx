@@ -2,7 +2,7 @@
 
 var assert = require('assert');
 var fs = require("fs");
-var PPTX = require('../lib/pptx');
+var PPTX = require('..');
 var xml2js = require('xml2js');
 var xmlbuilder = require('xmlbuilder')
 
